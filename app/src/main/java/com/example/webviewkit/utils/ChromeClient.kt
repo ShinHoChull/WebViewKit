@@ -26,15 +26,29 @@ import androidx.core.content.ContextCompat
 import com.example.webviewkit.R
 import com.example.webviewkit.common.Defines
 import java.io.ByteArrayOutputStream
+import android.webkit.WebChromeClient
 
-interface MessageCallback {
-    fun msg(msg: String?)
-}
+import android.webkit.ValueCallback
+import android.webkit.WebChromeClient.FileChooserParams
+import androidx.core.app.ActivityCompat.startActivityForResult
+
+import android.content.DialogInterface
+import android.os.Environment
+import android.text.TextUtils
+import androidx.core.content.FileProvider
+import androidx.fragment.app.FragmentActivity
+import com.example.webviewkit.view.ui.IImageHandler
+import com.example.webviewkit.view.ui.MainFragment
+import java.io.File
+import java.io.IOException
+
 
 class ChromeClient(
     private val context: Context
     , private val progressbar: ProgressBar
+    , private val activity : MainFragment
     ): WebChromeClient() {
+
 
     private var chromeView: View? = null
     private var fullScreenContainer: FullScreenHolder? = null
@@ -44,6 +58,7 @@ class ChromeClient(
     companion object {
         private val COVER_SCREEN_PARAMS = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
     }
+
 
     override fun onProgressChanged(view: WebView?, newProgress: Int) {
         super.onProgressChanged(view, newProgress)
@@ -139,6 +154,7 @@ class ChromeClient(
     }
 
     class FullScreenHolder(context: Context) : FrameLayout(context) {
+
         init {
             setBackgroundColor(ContextCompat.getColor(context, android.R.color.white))
         }
@@ -146,7 +162,35 @@ class ChromeClient(
         override fun onTouchEvent(event: MotionEvent?): Boolean {
             return true
         }
+
     }
+
+    var filePathCallbackLollipop: ValueCallback<Array<Uri>>? = null
+
+    override fun onShowFileChooser(
+        webView: WebView?,
+        filePathCallback: ValueCallback<Array<Uri>>?,
+        fileChooserParams: FileChooserParams?
+    ): Boolean {
+
+        Defines.log("call File Chooser")
+
+        if (filePathCallbackLollipop != null) {
+            filePathCallbackLollipop?.onReceiveValue(null)
+            filePathCallbackLollipop = null
+        }
+        filePathCallbackLollipop = filePathCallback
+
+        val isCapture = fileChooserParams?.isCaptureEnabled
+
+        activity.takePicture(filePathCallbackLollipop)
+
+
+        filePathCallbackLollipop = null
+        return true
+    }
+
+
 
 
 }
