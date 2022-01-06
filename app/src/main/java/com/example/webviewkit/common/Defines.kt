@@ -8,7 +8,8 @@ import java.util.*
 class Defines {
 
     companion object {
-        private const val baseUrl = "https://www.naver.com"
+
+        const val baseUrl = "https://m.naver.com/"
         private const val pattern = "yyyy-MM-dd HH:mm:ss"
 
         @SuppressLint("SimpleDateFormat")

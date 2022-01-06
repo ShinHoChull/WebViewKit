@@ -13,6 +13,8 @@ abstract class BaseActivity<B : ViewBinding>  (
     private var _binding : B? = null
     val mBinding get() = _binding!!
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = bindingFactory(layoutInflater)
@@ -23,6 +25,7 @@ abstract class BaseActivity<B : ViewBinding>  (
         super.onDestroy()
         _binding = null
     }
+
 
 
 }
