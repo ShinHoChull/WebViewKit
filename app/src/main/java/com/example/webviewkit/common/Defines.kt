@@ -24,5 +24,16 @@ class Defines {
             Log.d("consumed time",simpleDateFormat.format(Date()))
             Log.d(logName , "=====================")
         }
+
+        public fun logE(
+            log : String ,
+            logName : String = "YONG"
+        ) {
+            Log.e(logName , "==================")
+            Log.e(logName , log)
+            Log.e("consumed time",simpleDateFormat.format(Date()))
+            Log.e(logName , "=====================")
+        }
+
     }
 }

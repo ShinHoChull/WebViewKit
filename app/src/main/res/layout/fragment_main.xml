@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/parent_layout"
     android:background="#FFFFFF">
 
 
@@ -26,6 +27,5 @@
         app:layout_constraintTop_toBottomOf="@id/progress_bar"
         app:layout_constraintBottom_toBottomOf="parent"
         />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
